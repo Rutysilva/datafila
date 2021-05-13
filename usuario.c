@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//criação da struct fila
 typedef struct {
     int idade, cpf, celular;
     char nome[51], endereco[51];
@@ -13,10 +14,12 @@ fila * criar_fila_espera() {
 }
 
 int main(void) {
-    fila *filaEspera;
+    fila *filaNormal;
+    fila *filaPR;
     int escolha = 0;
 
-    filaEspera = criar_fila_espera();
+    filaNormal = criar_fila_espera();
+    filaPR = criar_fila_espera();
 
     while (escolha != 4) {
         printf("\n\n1 - Realizar agendamento\n");
@@ -29,7 +32,7 @@ int main(void) {
         setbuf(stdin, NULL);
 
         if (escolha == 1) {
-            
+
         }
         if (escolha == 2) {
 
