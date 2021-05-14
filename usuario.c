@@ -52,7 +52,7 @@ int main(void) {
     filaNormal = criar_fila_espera();
     filaPR = criar_fila_espera();
 
-    while (escolha < 0 || escolha > 3) {
+    while (escolha != 0) {
         printf("\n\n1 - Realizar agendamento\n");
         printf("2 - Mostrar posição na fila");
         printf("3 - Exibir informações para contato\n");
@@ -63,58 +63,54 @@ int main(void) {
         setbuf(stdin, NULL);
 
         if (escolha == 1) {
-            while (operacao < 0 || operacao > 4) {
-                printf("\n\n1 - Saque do INSS sem cartão\n");
-                printf("2 - Pagamento do abono e FGTS sem cartão\n");
-                printf("3 - Desbloquear cartão e senha da conta\n");
-                printf("4 - Consulta com gerente\n");
-                printf("0 - Voltar\n");
+            printf("\n\n1 - Saque do INSS sem cartão\n");
+            printf("2 - Pagamento do abono e FGTS sem cartão\n");
+            printf("3 - Desbloquear cartão e senha da conta\n");
+            printf("4 - Consulta com gerente\n");
+            printf("0 - Finalizar programa\n");
 
-                printf("Digite o número da operação: ");
-                scanf("%d", &operacao);
-                setbuf(stdin, NULL);
+            printf("Digite o número da operação: ");
+            scanf("%d", &operacao);
+            setbuf(stdin, NULL);
 
-                if (operacao > 0 && operacao <= 4) {
-                    printf("Insira seus dados:\n");
+            if (operacao > 0 && operacao <= 4) {
+                printf("Insira seus dados:\n");
 
-                    printf("Para começar informe seu nome: ");
-                    scanf("%[^\n]", nome);
+                printf("Para começar informe seu nome: ");
+                scanf("%[^\n]", nome);
 
-                    while (resposta < 0 || resposta > 1) {
-                        printf("\nFaz parte de algum grupo prioritário? (1-SIM ou 0-NÃO)");
-                        printf("\n(Idosos, gestantes, lactantes ou portador de deficiência)");
-                        printf("Resposta: ");
-                        scanf("%d", &resposta);
+                printf("\nFaz parte de algum grupo prioritário? (1-SIM ou 0-NÃO)");
+                printf("\n(Idosos, gestantes, lactantes ou portador de deficiência)");
+                printf("Resposta: ");
+                scanf("%d", &resposta);
 
-                        if (resposta == 1) {
-                            printf("Idade: ");
-                            scanf("%d", &idade);
-                            printf("CPF: ");
-                            scanf("%d", &nCPF);
-                            printf("Celular/telefone: ");
-                            scanf("%d", &nCelular);
-                            printf("Endereço: ");
-                            scanf("%[^\n]", endereco);
+                if (resposta == 1) {
+                    printf("Idade: ");
+                    scanf("%d", &idade);
+                    printf("CPF: ");
+                    scanf("%d", &nCPF);
+                    printf("Celular/telefone: ");
+                    scanf("%d", &nCelular);
+                    printf("Endereço: ");
+                    scanf("%[^\n]", endereco);
                             
-                            filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco);
-                        } 
-                        if (resposta == 0) {
-                            printf("Idade: ");
-                            scanf("%d", &idade);
-                            printf("CPF: ");
-                            scanf("%d", &nCPF);
-                            printf("Celular/telefone: ");
-                            scanf("%d", &nCelular);
-                            printf("Endereço: ");
-                            scanf("%[^\n]", endereco);
+                    filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco);
+                } 
+                if (resposta == 0) {
+                    printf("Idade: ");
+                    scanf("%d", &idade);
+                    printf("CPF: ");
+                    scanf("%d", &nCPF);
+                    printf("Celular/telefone: ");
+                    scanf("%d", &nCelular);
+                    printf("Endereço: ");
+                    scanf("%[^\n]", endereco);
 
-                            filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco);
-                        }
-                    }
+                    filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco);
                 }
-                if (operacao == 0) {
-                    break;
-                }
+            }
+            if (operacao == 0) {
+                break;
             }
 
         }
