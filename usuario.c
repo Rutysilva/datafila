@@ -13,15 +13,39 @@ Fila * criar_fila_espera() {
     return NULL;
 }
 
-Fila * inserir_usuario(Fila *fila, char nome[], int idade, int cpf, int celular, char endereco[]) {
+Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelular, char fEndereco[]) {
     Fila *novo_usuario;
     novo_usuario = (Fila *) malloc(sizeof(Fila));
+
+    strcpy(novo_usuario->nome, nome);
+    novo_usuario->idade = fIdade;
+    novo_usuario->cpf = nCPF;
+    novo_usuario->celular = nCelular;
+    strcpy(novo_usuario->endereco, fEndereco);
+
+    novo_usuario->prox = (struct Fila *) fila;
+
+    return novo_usuario;
+}
+
+void mostrar_posicao(Fila *fila, int cpfBuscado) {
+    Fila *pontAuxiliar;
+    int posicao = 1;
+
+    while (pontAuxiliar != NULL) {
+        if (pontAuxiliar->cpf == cpfBuscado) {
+            printf("\nPOSIÇÃO %d", posicao);
+        }
+        pontAuxiliar = (Fila *) pontAuxiliar->prox;
+        posicao++;
+    }
 }
 
 int main(void) {
     Fila *filaNormal;
     Fila *filaPR;
-    int escolha, operacao, resposta;
+
+    int escolha, operacao, resposta, escolhaFila, cpfBusca;
     int idade, nCPF, nCelular;
     char nome[50], endereco[50];
 
@@ -69,12 +93,22 @@ int main(void) {
                             scanf("%d", &nCPF);
                             printf("Celular/telefone: ");
                             scanf("%d", &nCelular);
-                            printf("%[^\n]", endereco);
-
+                            printf("Endereço: ");
+                            scanf("%[^\n]", endereco);
                             
+                            filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco);
                         } 
                         if (resposta == 0) {
+                            printf("Idade: ");
+                            scanf("%d", &idade);
+                            printf("CPF: ");
+                            scanf("%d", &nCPF);
+                            printf("Celular/telefone: ");
+                            scanf("%d", &nCelular);
+                            printf("Endereço: ");
+                            scanf("%[^\n]", endereco);
 
+                            filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco);
                         }
                     }
                 }
@@ -85,7 +119,23 @@ int main(void) {
 
         }
         if (escolha == 2) {
+            while (escolhaFila < 0 || escolha > 1) {
+                printf("\n1 - Fila normal");
+                printf("\n2 - Fila prioritário\n");
+                printf("Escolha: ");
+                scanf("%d", &escolhaFila);
 
+                if (escolhaFila == 1) {
+                    printf("Digite o CPF para a busca: ");
+                    scanf("%d", &cpfBusca);
+                    mostrar_posicao(filaNormal, cpfBusca);
+                }
+                if (escolhaFila == 2) {
+                    printf("Digite o CPF para a busca: ");
+                    scanf("%d", &cpfBusca);
+                    mostrar_posicao(filaPR, cpfBusca);
+                }
+            }
         }
         if (escolha == 3) {
             printf("\n\nINFORMAÇÕES PARA CONTATO:\n");
