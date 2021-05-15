@@ -83,29 +83,19 @@ int main(void) {
                 printf("\n(Idosos, gestantes, lactantes ou portador de deficiência)");
                 printf("Resposta: ");
                 scanf("%d", &resposta);
+                printf("Idade: ");
+                scanf("%d", &idade);
+                printf("CPF: ");
+                scanf("%d", &nCPF);
+                printf("Celular/telefone: ");
+                scanf("%d", &nCelular);
+                printf("Endereço: ");
+                scanf("%[^\n]", endereco);
 
-                if (resposta == 1) {
-                    printf("Idade: ");
-                    scanf("%d", &idade);
-                    printf("CPF: ");
-                    scanf("%d", &nCPF);
-                    printf("Celular/telefone: ");
-                    scanf("%d", &nCelular);
-                    printf("Endereço: ");
-                    scanf("%[^\n]", endereco);
-                            
+                if (resposta == 1) {      
                     filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco);
                 } 
                 if (resposta == 0) {
-                    printf("Idade: ");
-                    scanf("%d", &idade);
-                    printf("CPF: ");
-                    scanf("%d", &nCPF);
-                    printf("Celular/telefone: ");
-                    scanf("%d", &nCelular);
-                    printf("Endereço: ");
-                    scanf("%[^\n]", endereco);
-
                     filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco);
                 }
             }
@@ -115,22 +105,20 @@ int main(void) {
 
         }
         if (escolha == 2) {
-            while (escolhaFila < 0 || escolha > 1) {
-                printf("\n1 - Fila normal");
-                printf("\n2 - Fila prioritário\n");
-                printf("Escolha: ");
-                scanf("%d", &escolhaFila);
+            printf("\n1 - Fila normal");
+            printf("\n2 - Fila prioritário\n");
+            printf("Escolha: ");
+            scanf("%d", &escolhaFila);
 
-                if (escolhaFila == 1) {
-                    printf("Digite o CPF para a busca: ");
-                    scanf("%d", &cpfBusca);
-                    mostrar_posicao(filaNormal, cpfBusca);
-                }
-                if (escolhaFila == 2) {
-                    printf("Digite o CPF para a busca: ");
-                    scanf("%d", &cpfBusca);
-                    mostrar_posicao(filaPR, cpfBusca);
-                }
+            if (escolhaFila == 1) {
+                printf("Digite o CPF para a busca: ");
+                scanf("%d", &cpfBusca);
+                mostrar_posicao(filaNormal, cpfBusca);
+            }
+            if (escolhaFila == 2) {
+                printf("Digite o CPF para a busca: ");
+                scanf("%d", &cpfBusca);
+                mostrar_posicao(filaPR, cpfBusca);
             }
         }
         if (escolha == 3) {
