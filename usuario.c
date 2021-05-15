@@ -16,6 +16,8 @@ Fila * criar_fila_espera() {
 Fila * inserir_usuario(Fila *fila, char nome[], int idade, int cpf, int celular, char endereco[]) {
     Fila *novo_usuario;
     novo_usuario = (Fila *) malloc(sizeof(Fila));
+
+    //parei aqui pprt
 }
 
 int main(void) {
