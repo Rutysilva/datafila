@@ -23,18 +23,30 @@ Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelul
     novo_usuario->celular = nCelular;
     strcpy(novo_usuario->endereco, fEndereco);
 
-    novo_usuario->prox = (struct Fila *) fila;
+    if (fila == NULL) {
+        novo_usuario->prox = NULL;
+        return novo_usuario;
+    } else {
+        Fila *pontAuxiliar = fila;
 
-    return novo_usuario;
+        while (pontAuxiliar->prox != NULL) {
+            pontAuxiliar = pontAuxiliar->prox;
+        }
+
+        novo_usuario->prox = NULL;
+        pontAuxiliar->prox = novo_usuario;
+
+        return novo_usuario;
+    }
 }
 
 void mostrar_posicao(Fila *fila, int cpfBuscado) {
-    Fila *pontAuxiliar;
+    Fila *pontAuxiliar = fila;
     int posicao = 1;
 
     while (pontAuxiliar != NULL) {
         if (pontAuxiliar->cpf == cpfBuscado) {
-            printf("\nPOSIÇÃO %d", posicao);
+            printf("\nPOSIÇÃO %d\n\n", posicao);
         }
         pontAuxiliar = (Fila *) pontAuxiliar->prox;
         posicao++;
@@ -64,7 +76,7 @@ int main(void) {
         setbuf(stdin, NULL);
 
         if (escolha == 1) {
-            printf("\n\n1 - Saque do INSS sem cartão\n");
+            printf("\n1 - Saque do INSS sem cartão\n");
             printf("2 - Pagamento do abono e FGTS sem cartão\n");
             printf("3 - Desbloquear cartão e senha da conta\n");
             printf("4 - Consulta com gerente\n");
@@ -133,3 +145,9 @@ int main(void) {
         }
     }
 }
+
+//problema encontrado:
+//a função de mostrar a posição sempre indica a primeira posição para o último inserido
+//duas possibilidades
+//ou os valores não estão sendo inseridos corretamente
+//ou a função de mostrar a posição não está funcionando corretamente
