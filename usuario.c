@@ -23,39 +23,37 @@ Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelul
     novo_usuario->celular = nCelular;
     strcpy(novo_usuario->endereco, fEndereco);
 
-    if (fila == NULL) {
-        novo_usuario->prox = NULL;
-        return novo_usuario;
-    } else {
-        Fila *pontAuxiliar = fila;
+    novo_usuario->prox = (struct Fila *) fila;
 
-        while (pontAuxiliar->prox != NULL) {
-            pontAuxiliar = pontAuxiliar->prox;
-        }
-
-        novo_usuario->prox = NULL;
-        pontAuxiliar->prox = novo_usuario;
-
-        return novo_usuario;
-    }
+    return novo_usuario;
 }
 
 void mostrar_posicao(Fila *fila, int cpfBuscado) {
     Fila *pontAuxiliar = fila;
-    int posicao = 1;
+    int qtdPessoas = 0;
+
+    while (pontAuxiliar != NULL) {
+        pontAuxiliar = (Fila *) pontAuxiliar->prox;
+        qtdPessoas++;
+    }
+
+    pontAuxiliar = fila;
 
     while (pontAuxiliar != NULL) {
         if (pontAuxiliar->cpf == cpfBuscado) {
-            printf("\nPOSIÇÃO %d\n\n", posicao);
+            printf("\nPOSIÇÃO %d\n\n", qtdPessoas);
         }
         pontAuxiliar = (Fila *) pontAuxiliar->prox;
-        posicao++;
+        qtdPessoas--;
     }
 }
 
 int main(void) {
     Fila *filaNormal;
     Fila *filaPR;
+
+    filaNormal = criar_fila_espera();
+    filaPR = criar_fila_espera();
 
     int escolha = -1, operacao = -1, resposta = -1, escolhaFila, cpfBusca;
     int idade, nCPF, nCelular;
@@ -137,10 +135,10 @@ int main(void) {
             printf("\n\nINFORMAÇÕES PARA CONTATO:\n");
             printf("Whatsapp: 1 2345-6789\n");
             printf("Telefone: 1234-5678\n");
-            printf("Email: emailexemplo@gmail.com");
+            printf("Email: emailexemplo@gmail.com\n\n");
         } 
         if (escolha == 0) {
-            printf("Programa finalizado...");
+            printf("\nPrograma finalizado...");
             exit(0);
         }
     }
