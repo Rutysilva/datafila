@@ -48,6 +48,29 @@ void mostrar_posicao(Fila *fila, int cpfBuscado) {
     }
 }
 
+Fila * reagendar(Fila *fila, int cpfReag) {
+    Fila *pontAuxiliar = fila;
+    Fila *auxiliar2 = NULL;
+
+    while (pontAuxiliar != NULL && pontAuxiliar->cpf != cpfReag) {
+        auxiliar2 = pontAuxiliar;
+        pontAuxiliar = (Fila *) pontAuxiliar->prox;
+    }
+
+    if (pontAuxiliar == NULL) {
+        return fila;
+    } 
+    if (auxiliar2 == NULL) {
+        fila = (Fila *) pontAuxiliar->prox;
+    }
+    else {
+        auxiliar2->prox = pontAuxiliar->prox;
+    }
+
+    free(pontAuxiliar);
+    return fila;
+}
+
 int main(void) {
     Fila *filaNormal;
     Fila *filaPR;
@@ -65,8 +88,9 @@ int main(void) {
     while (escolha != 0) {
         printf("-------------------------------------------\n");
         printf("1 - Realizar agendamento\n");
-        printf("2 - Mostrar posição na fila\n");
-        printf("3 - Exibir informações para contato\n");
+        printf("2 - Remover consulta da fila de espera\n");
+        printf("3 - Mostrar posição na fila\n");
+        printf("4 - Exibir informações para contato\n");
         printf("0 - Finalizar programa\n");
 
         printf("Digite sua escolha: ");
@@ -118,7 +142,22 @@ int main(void) {
         }
         if (escolha == 2) {
             printf("\n1 - Fila normal");
-            printf("\n2 - Fila prioritário\n");
+            printf("\n2 - Fila prioritária\n");
+            printf("Escolha: ");
+            scanf("%d", &escolhaFila);
+            printf("Digite o CPF para remoção: ");
+            scanf("%d", &cpfBusca);
+
+            if (escolhaFila == 1) {
+                filaNormal = reagendar(filaNormal, cpfBusca);
+            }
+            if (escolhaFila == 2) {
+                filaPR = filareagendar(filaPR, cpfBusca);
+            }
+        }
+        if (escolha == 3) {
+            printf("\n1 - Fila normal");
+            printf("\n2 - Fila prioritária\n");
             printf("Escolha: ");
             scanf("%d", &escolhaFila);
             printf("Digite o CPF para a busca: ");
@@ -131,7 +170,7 @@ int main(void) {
                 mostrar_posicao(filaPR, cpfBusca);
             }
         }
-        if (escolha == 3) {
+        if (escolha == 4) {
             printf("\n\nINFORMAÇÕES PARA CONTATO:\n");
             printf("Whatsapp: 1 2345-6789\n");
             printf("Telefone: 1234-5678\n");
