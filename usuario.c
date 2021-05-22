@@ -4,18 +4,23 @@
 
 //criação da struct fila
 typedef struct {
-    int idade, cpf, celular;
+    int idade, cpf, celular, operacao, tipoAtendimento;
     char nome[51], endereco[51];
     struct Fila *prox;
 } Fila;
 
+//função para a criação de uma fila de espera
 Fila * criar_fila_espera() {
     return NULL;
 }
 
-Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelular, char fEndereco[]) {
+//função para a inserção de um novo elemento (usuário) na lista
+Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelular, char fEndereco[], int fOperacao, int fResposta) {
     Fila *novo_usuario;
     novo_usuario = (Fila *) malloc(sizeof(Fila));
+
+    novo_usuario->operacao = fOperacao;
+    novo_usuario->tipoAtendimento = fResposta;
 
     strcpy(novo_usuario->nome, nome);
     novo_usuario->idade = fIdade;
@@ -28,6 +33,26 @@ Fila * inserir_usuario(Fila *fila, char nome[], int fIdade, int nCPF, int nCelul
     return novo_usuario;
 }
 
+//função para o registro do atendimento no arquivo de histórico do deficiência
+Fila * registrar_atendimentos(Fila *fila, char nome[], int fIdade, int nCPF, int nCelular, char fEndereco, int fOperacao, int fResposta) {
+    FILE *fArquivo;
+    Fila *novo_usuario;
+
+    fArquivo = fopen("historico_diario.txt", "ab");
+
+    novo_usuario->operacao = fOperacao;
+    novo_usuario->tipoAtendimento = fResposta;
+
+    strcpy(novo_usuario->nome, nome);
+    novo_usuario->idade = fIdade;
+    novo_usuario->cpf = nCPF;
+    novo_usuario->celular = nCelular;
+    strcpy(novo_usuario->endereco, fEndereco);
+
+    fwrite(&novo_usuario, sizeof(Fila), 1, fArquivo);
+}
+
+//função para mostrar a posição do usuário na fla de espera
 void mostrar_posicao(Fila *fila, int cpfBuscado) {
     Fila *pontAuxiliar = fila;
     int qtdPessoas = 0;
@@ -48,6 +73,7 @@ void mostrar_posicao(Fila *fila, int cpfBuscado) {
     }
 }
 
+//função para excluir um usuário da fila e liberar o espaço de memória
 Fila * reagendar(Fila *fila, int cpfReag) {
     Fila *pontAuxiliar = fila;
     Fila *auxiliar2 = NULL;
@@ -74,6 +100,9 @@ Fila * reagendar(Fila *fila, int cpfReag) {
 int main(void) {
     Fila *filaNormal;
     Fila *filaPR;
+
+    FILE *arquivo;
+    arquivo = fopen("historico_diario.txt", "wb");
 
     filaNormal = criar_fila_espera();
     filaPR = criar_fila_espera();
@@ -129,10 +158,10 @@ int main(void) {
                 scanf("%[^\n]", endereco);
 
                 if (resposta == 1) {      
-                    filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco);
-                } 
+                    filaPR = inserir_usuario(filaPR, nome, idade, nCPF, nCelular, endereco, operacao, resposta);
+                }
                 if (resposta == 0) {
-                    filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco);
+                    filaNormal = inserir_usuario(filaNormal, nome, idade, nCPF, nCelular, endereco, operacao, resposta);
                 }
             }
             if (operacao == 0) {
@@ -152,7 +181,7 @@ int main(void) {
                 filaNormal = reagendar(filaNormal, cpfBusca);
             }
             if (escolhaFila == 2) {
-                filaPR = filareagendar(filaPR, cpfBusca);
+                filaPR = reagendar(filaPR, cpfBusca);
             }
         }
         if (escolha == 3) {
