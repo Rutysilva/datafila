@@ -167,6 +167,9 @@ int main(void) {
             if (operacao == 0) {
                 break;
             }
+             else{
+              printf("\n\n OPERAÇÃO IVÁLIDA\n\n");
+            }
 
         }
         if (escolha == 2) {
@@ -183,6 +186,9 @@ int main(void) {
             if (escolhaFila == 2) {
                 filaPR = reagendar(filaPR, cpfBusca);
             }
+            if(escolhaFila != 1 || escolhaFila != 2){
+              printf("\n\n OPERAÇÃO INVÁLIDA\n\n");
+            }
         }
         if (escolha == 3) {
             printf("\n1 - Fila normal");
@@ -198,6 +204,9 @@ int main(void) {
             if (escolhaFila == 2) {
                 mostrar_posicao(filaPR, cpfBusca);
             }
+            if (cpfBusca != nCPF){
+              printf("\n\n********** Esta pessoa não se encontra na fila **********\n\n");
+            }
         }
         if (escolha == 4) {
             printf("\n\nINFORMAÇÕES PARA CONTATO:\n");
@@ -212,8 +221,11 @@ int main(void) {
     }
 }
 
-//problema encontrado:
+//problema encontrado (P1):  
 //a função de mostrar a posição sempre indica a primeira posição para o último inserido
 //duas possibilidades
 //ou os valores não estão sendo inseridos corretamente
 //ou a função de mostrar a posição não está funcionando corretamente
+// (CORRIGIDO P1)
+// problema encontrado (P2): 
+// os dados não estão ficando salvos no histórico_diário
